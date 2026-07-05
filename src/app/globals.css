@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   Design tokens — Rx Nailz
+   A playful pharmacy-of-nails. Clinical white base, medical mint green
+   + a single red-cross-red accent, monospace label typography, pill
+   buttons. Witty, clean, memorable — a wink, not a clinic.
+------------------------------------------------------------------ */
+@theme {
+  --color-paper: #f5faf8; /* clinical off-white base */
+  --color-white: #ffffff;
+
+  --color-mint: #21bd97;
+  --color-mint-deep: #12876c;
+  --color-mint-soft: #d6f2ea;
+
+  --color-cross: #e63946; /* the single red accent */
+
+  --color-ink: #11221d; /* near-black green text */
+  --color-slate: #5e716a;
+
+  --font-display: var(--font-dmsans);
+  --font-mono: var(--font-spacemono);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(33, 189, 151, 0.24);
+  color: var(--color-mint-deep);
+}
+
+@layer base {
+  button,
+  a {
+    cursor: pointer;
+  }
+}
+
+/* Prescription-label micro type */
+.mono-label {
+  font-family: var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Dashed "label" box like a pharmacy sticker */
+.rx-label {
+  border: 1.5px dashed rgba(18, 135, 108, 0.45);
+  background: var(--color-white);
+}
+
+.shadow-rx {
+  box-shadow: 0 16px 40px -22px rgba(18, 135, 108, 0.4);
+}
+
+/* ------------------------------------------------------------------
+   Scroll reveal
+------------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
